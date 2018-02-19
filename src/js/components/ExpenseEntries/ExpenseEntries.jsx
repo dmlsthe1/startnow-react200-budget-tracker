@@ -3,7 +3,9 @@ import React from "react";
 import {
     updateExpenseDescription,
     updateExpenseAmount,
-    addExpense
+    addExpense,
+    deleteExpense,
+    editExpense
 } from "./expenseActions";
 
 export default class ExpenseEntries extends React.Component {
@@ -13,6 +15,8 @@ export default class ExpenseEntries extends React.Component {
         this.handleDescriptionInput = this.handleDescriptionInput.bind(this);
         this.handleAmountInput = this.handleAmountInput.bind(this);
         this.handleAddExpense = this.handleAddExpense.bind(this);
+        this.handleDeleteExpense = this.handleDeleteExpense.bind(this);
+        this.handleEditExpense = this.handleEditExpense.bind(this);
     }
 
     handleDescriptionInput(event) {
@@ -29,7 +33,24 @@ export default class ExpenseEntries extends React.Component {
 
     handleAddExpense() {
         const { description, amount, dispatch } = this.props;
+        if (!description || !amount ) {
+            return alert("Please enter values into the description and amount fields");
+        }
+        document.getElementById("expense-description").value = "";
+        document.getElementById("expense-amount").value = "";
         dispatch(addExpense(description, amount));
+    }
+
+    handleDeleteExpense(e) {
+        const { dispatch } = this.props;
+        const index = e.target.parentNode.dataset.index;
+        dispatch(deleteExpense(index));
+    }
+
+    handleEditExpense(e) {
+        const { dispatch } = this.props;
+        const index = e.target.parentNode.dataset.index;
+        dispatch(editExpense(index));
     }
 
     render() {
@@ -75,7 +96,7 @@ export default class ExpenseEntries extends React.Component {
                             </thead>
                             <tbody>
                                 {lineItems.map((lineItem, index) => (
-                                    <tr key={index}>
+                                    <tr onClick={this.handleEditExpense} data-index={index} key={index}>
                                         <td>{lineItem.description}</td>
                                         <td>${lineItem.amount.toFixed(2)}</td>
                                     </tr>

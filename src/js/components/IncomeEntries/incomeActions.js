@@ -21,3 +21,28 @@ export function addIncome(description, amount) {
         }
     };
 }
+
+export function deleteIncome(index){
+    return {
+        type: "DELETE_INCOME",
+        payload: { index }
+    }
+}
+
+export function editIncome(index){
+    return {
+        type: "EDIT_INCOME",
+        payload: { index }
+    }
+}
+
+export function saveEdit(index, description, amount){
+    return {
+        type: "SAVE_EDIT", 
+        payload: { 
+            index,
+            description,
+            amount: parseFloat(amount)
+        }
+    }
+}

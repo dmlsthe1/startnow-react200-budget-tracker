@@ -1,22 +1,11 @@
 import React from "react";
 
 function calculateSum(lineItems) {
-    console.log("lineItems: ", lineItems)
     return lineItems.reduce((acc, lineItem) => acc + lineItem.amount, 0)
 }
 
 function formatCurrency(amount) {
-    if (amount >= 0) {
-        // const dollars = Math.floor(amount);
-        // const cents = Math.round((amount - dollars) * 100).toString().padEnd(2, "0");
-        // return `$${dollars.toLocaleString()}.${cents}`;
-        return `$${amount.toFixed(2)}`
-    }
-
-    // const dollars = Math.ceil(amount);
-    // const cents = Math.floor((amount - dollars) * 100).toString().padEnd(2, "0");
-    // return `-$${(dollars * -1).toLocaleString()}.${cents}`;
-    return `-$${Math.abs(amount.toFixed(2))}`
+    return amount >= 0 ? `$${amount.toFixed(2)}` : `-$${Math.abs(amount.toFixed(2))}`;
 }
 
 class Summary extends React.Component {

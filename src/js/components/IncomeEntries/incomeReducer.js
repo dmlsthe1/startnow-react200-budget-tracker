@@ -34,6 +34,40 @@ export default function IncomeReducer (state = defaultState, action) {
             };
         }
 
+        case "DELETE_INCOME": {
+            var lineItems = [...state.lineItems];
+            lineItems.splice(action.payload.index, 1);
+            return {
+                ...state,
+                lineItems
+            }
+        }
+
+        case "EDIT_INCOME": {
+            var index = action.payload.index;
+            var lineItems = [...state.lineItems];
+            lineItems[index].editable = true;
+            return {
+                ...state,
+                lineItems
+            }
+        }
+
+        case "SAVE_EDIT": {
+            var {index, description, amount} = action.payload;
+            var lineItems = [...state.lineItems];
+            var newLineItem = {
+                editable: false,
+                description,
+                amount
+            }
+            lineItems.splice(index, 1, newLineItem);
+            return {
+                ...state,
+                lineItems
+            }
+        }
+
         default: {
             return state;
         }

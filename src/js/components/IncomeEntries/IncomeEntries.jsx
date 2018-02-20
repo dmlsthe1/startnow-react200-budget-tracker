@@ -6,7 +6,8 @@ import {
     addIncome,
     deleteIncome,
     editIncome,
-    saveEdit
+    saveEdit,
+    editChange
 } from "./incomeActions";
 
 export default class IncomeEntries extends React.Component {
@@ -59,24 +60,14 @@ export default class IncomeEntries extends React.Component {
     handleSaveEdit(e) {
         const { dispatch } = this.props;
         const index = e.target.dataset.index;
-        var description = this.state[`description-${index}`];
-        var amount = this.state[`amount-${index}`];
-        if (description == undefined) {
-            description = this.props.lineItems[index].description;
-        }
-        if (amount == undefined) {
-            amount = this.props.lineItems[index].amount;
-        }
-        amount = amount.toString().replace(/\$/g,"");
-        console.log(amount)
-        dispatch(saveEdit(index, description, amount));
+        dispatch(saveEdit(index));
     }
-
+    
     handleEditChange(e) {
-        const {id, value} = e.target;
-        this.setState({
-            [id]: value
-        });
+        const {dispatch} = this.props;
+        var {id, value} = e.target;
+        const index = e.target.dataset.index;
+        dispatch(editChange(index, id, value));
     }
 
     render() {
@@ -134,9 +125,10 @@ export default class IncomeEntries extends React.Component {
                                             <div className="form-group">
                                                 <label htmlFor="income-description">Description</label>
                                                 <input  
+                                                    data-index={index}
                                                     type="text"
                                                     className="form-control"
-                                                    id={`description-${index}`}
+                                                    id={'description'}
                                                     defaultValue={lineItem.description}
                                                     onChange={this.handleEditChange}
                                                 />
@@ -146,9 +138,10 @@ export default class IncomeEntries extends React.Component {
                                                 <div className="input-group">
                                                     <span className="input-group-addon">$</span>
                                                     <input 
+                                                        data-index={index}
                                                         type="text"
                                                         className="form-control"
-                                                        id={`amount-${index}`}
+                                                        id={'amount'}
                                                         defaultValue={`$${lineItem.amount.toFixed(2)}`}
                                                         onChange={this.handleEditChange}
                                                     />

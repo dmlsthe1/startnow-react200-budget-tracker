@@ -46,3 +46,14 @@ export function saveEdit(index, description, amount){
         }
     }
 }
+
+export function editChange(index, id, value){
+    return {
+        type: "EDIT_CHANGE",
+        payload: {
+            index,
+            id,
+            value
+        }
+    }
+}

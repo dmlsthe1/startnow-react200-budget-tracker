@@ -73,8 +73,8 @@ export default class IncomeEntries extends React.Component {
     render() {
         const { description, amount, lineItems } = this.props;
         return (
-            <div className="card border-danger mb-3">
-                <div className="card-header text-white bg-danger">Income Entries</div>
+            <div className="card border-success mb-3">
+                <div className="card-header text-white bg-success">Income Entries</div>
                 <div className="card-body">
                     <form onSubmit={this.handleAddIncome}>
                         <div className="form-group">
@@ -99,7 +99,7 @@ export default class IncomeEntries extends React.Component {
                             </div>
                         </div>
                         <button
-                            className="btn btn-danger col-12 mb-5"
+                            className="btn btn-success col-12 mb-5"
                         >+ Add Income
                         </button>
                         <table className="table table-sm table-hover">
